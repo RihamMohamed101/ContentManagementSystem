@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BLL/BLL.csproj" />
+  <Project Path="ContentManagementSystem/ContentManagementSystem.csproj" />
+  <Project Path="DAL/DAL.csproj" />
+</Solution>

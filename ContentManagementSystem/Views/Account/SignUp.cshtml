@@ -1,0 +1,22 @@
+﻿
+
+@model SignUpViewModel
+
+
+
+<form asp-action="SignUp">
+
+
+
+
+    <input asp-for="@Model.UserName" />
+
+    <span asp-validation-for="@Model.UserName"></span>
+
+    <input asp-for="@Model.Password" />
+
+    <span asp-validation-for="@Model.Password"></span>
+
+   <button type="submit">create</button>
+
+</form>
