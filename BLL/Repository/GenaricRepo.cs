@@ -28,6 +28,14 @@ namespace BLL.Repository
         {
             _db.Remove(entity);
         }
+
+        public T Get(int id) => _db.Set<T>().Find(id);
+
+        public List<T> GetAll()
+        {
+            return _db.Set<T>().ToList();
+        }
+
         public void Update(T entity)
         {
             _db.Update(entity);

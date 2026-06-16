@@ -1,0 +1,86 @@
+﻿@model AboutViewModel
+@{
+    ViewData["Title"] = "About Section Editor";
+}
+
+<div class="card shadow-sm border rounded-3 bg-white">
+    <div class="card-header bg-white border-bottom p-4">
+        <h2 class="h5 fw-bold text-dark mb-1">About Section Editor</h2>
+        <p class="text-muted small mb-0">Edit the details, story, and media for the "About Us" section of your website.</p>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-area="Admin" asp-controller="About" asp-action="AddAbout" method="post" enctype="multipart/form-data">
+
+            <input type="hidden" asp-for="ImageUrl" />
+
+            <div class="mb-5">
+                <h6 class="text-uppercase fw-bold text-custom-indigo mb-3" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                    Section Typography
+                </h6>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="Title" class="form-label fw-semibold small text-secondary">Section Title</label>
+                        <input type="text" asp-for="Title" class="form-control rounded-2" placeholder="e.g., Who We Are" />
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="Subtitle" class="form-label fw-semibold small text-secondary">Main Heading / Subtitle</label>
+                        <input type="text" asp-for="Subtitle" class="form-control rounded-2" placeholder="e.g., We provide the best educational experience since 2020" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-semibold small text-secondary">Detailed Description</label>
+                    <textarea asp-for="Description" class="form-control rounded-2" rows="6" placeholder="Write your company story or description here..."></textarea>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h6 class="text-uppercase fw-bold text-custom-indigo mb-3" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                    Section Media
+                </h6>
+
+                <label class="form-label fw-semibold small text-secondary mb-2">About Section Image</label>
+
+                <div class="mb-3 rounded-3 overflow-hidden border" style="max-width: 400px;">
+                    @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+                    {
+                        <img src="~/files/images/@Model.ImageUrl" alt="About Image" class="w-100 d-block" style="height: 220px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-light d-flex align-items-center justify-content-center text-muted" style="height: 220px;">
+                            <span class="small">No image uploaded yet</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="position-relative border border-2 border-dashed rounded-3 p-4 text-center bg-light-subtle hover-bg-light transition"
+                     style="border-style: dashed !important; border-color: #cbd5e1 !important; max-width: 400px;">
+
+                    <input type="file" asp-for="ImageFile" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer;" />
+
+                    <div class="py-2">
+                        <div class="text-secondary mb-2">
+                            <i class="fa-solid fa-images fs-3 text-muted"></i>
+                        </div>
+                        <p class="mb-1 small text-dark">
+                            <span class="text-custom-indigo fw-semibold">Click to update image</span>
+                        </p>
+                        <span class="text-muted d-block" style="font-size: 0.725rem;">PNG, JPG or WEBP (Max 5MB)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                <a href="#" class="btn btn-light border px-4 fw-medium text-secondary" style="font-size: 0.875rem;">Cancel</a>
+
+                <button type="submit" class="btn bg-custom-indigo text-white px-4 fw-medium border-0" style="font-size: 0.875rem;">
+                    <i class="fa-regular fa-floppy-disk me-1"></i> Save About Details
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -8,6 +8,8 @@ namespace BLL.Interfaces
     {
 
         public void Add(T Entity);
+        public T Get(int id);
+        public List<T> GetAll();
         public void Update(T Entity);
         public void Delete(T Entity);
     }

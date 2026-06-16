@@ -1,3 +1,5 @@
+using BLL.Interfaces;
+using BLL.Repository;
 using DAL.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,10 @@ namespace ContentManagementSystem
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(confg =>
             {
@@ -29,6 +35,11 @@ namespace ContentManagementSystem
                 confg.Password.RequireNonAlphanumeric = false;
 
             }).AddEntityFrameworkStores<AppDbContext>();
+
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        
 
             var app = builder.Build();
 

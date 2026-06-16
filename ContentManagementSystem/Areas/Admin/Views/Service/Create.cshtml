@@ -1,0 +1,139 @@
+﻿
+@model ServiceViewModel
+@{
+    ViewData["Title"] = "Add New Service";
+}
+
+<div class="mb-4">
+    <h2 class="h3 fw-bold text-dark mb-1">Add New Service</h2>
+    <p class="text-muted small mb-0">Define the details for a new service offering to display on the platform.</p>
+</div>
+
+<div class="card shadow-sm border rounded-3 bg-white p-4">
+    <form asp-area="Admin" asp-controller="Service" asp-action="Create" method="post">
+
+        <div class="row g-4 mb-4 border-bottom pb-4">
+            <div class="col-md-7">
+                <div class="mb-4">
+                    <label asp-for="Title" class="form-label fw-semibold small text-dark">Service Name</label>
+                    <input type="text" asp-for="Title" id="serviceTitleInput" class="form-control rounded-2" placeholder="e.g., Strategic Cloud Migration" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-semibold small text-dark">Description</label>
+                    <textarea asp-for="Description" id="serviceDescInput" class="form-control rounded-2" rows="5" placeholder="Provide a comprehensive description of the service and its benefits..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="h-100 rounded-3 d-flex flex-column align-items-center justify-content-center text-center p-4"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+
+                    <div id="previewIconBox" class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3"
+                         style="width: 60px; height: 60px; color: #4f46e5;">
+                        <i id="previewIcon" class="fa-solid fa-pen-ruler fs-4"></i>
+                    </div>
+
+                    <h5 id="previewTitle" class="fw-bold text-dark mb-2 fs-6">Preview Generation</h5>
+                    <p id="previewDesc" class="text-muted small mb-0" style="font-size: 0.8rem;">
+                        Fill out the details to see a live preview of the service card.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-end mb-3">
+                <label class="fw-semibold small text-dark mb-0">Associated Icon</label>
+                <span class="text-muted small" style="font-size: 0.75rem;">Select one to represent the service visually.</span>
+            </div>
+
+            <input type="hidden" asp-for="Icon" id="selectedIconInput" value="fa-cloud" />
+            <span asp-validation-for="Icon" class="text-danger small d-block mb-2"></span>
+
+            <div class="d-flex flex-wrap gap-2" id="iconSelectionContainer">
+                @foreach (var iconClass in new[] { "fa-cloud", "fa-database", "fa-shield-halved", "fa-arrows-to-circle", "fa-window-maximize", "fa-gauge-high", "fa-chart-simple", "fa-headset", "fa-network-wired" })
+                {
+                    <div class="icon-box rounded-2 d-flex align-items-center justify-content-center cursor-pointer transition @(iconClass == "fa-cloud" ? "active" : "")"
+                         data-icon="@iconClass"
+                         style="width: 50px; height: 50px; border: 1px solid #e2e8f0;">
+                        <i class="fa-solid @iconClass fs-5"></i>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 pt-3 border-top mt-5">
+            <a asp-action="Index" class="btn btn-light border px-4 fw-medium text-dark" style="font-size: 0.875rem;">Cancel</a>
+            <button type="submit" class="btn text-white px-4 fw-medium border-0" style="background-color: #4f46e5; font-size: 0.875rem;">
+                Save Service
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .transition {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .icon-box:hover {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1 !important;
+    }
+
+    .icon-box.active {
+        border-color: #4f46e5 !important;
+        background-color: #e0e7ff;
+        color: #4f46e5;
+        border-width: 2px !important;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const titleInput = document.getElementById('serviceTitleInput');
+            const descInput = document.getElementById('serviceDescInput');
+            const previewTitle = document.getElementById('previewTitle');
+            const previewDesc = document.getElementById('previewDesc');
+
+            const iconBoxes = document.querySelectorAll('.icon-box');
+            const selectedIconInput = document.getElementById('selectedIconInput');
+            const previewIcon = document.getElementById('previewIcon');
+
+            titleInput.addEventListener('keyup', function() {
+                previewTitle.textContent = this.value || 'Preview Generation';
+            });
+
+            descInput.addEventListener('keyup', function() {
+                previewDesc.textContent = this.value || 'Fill out the details to see a live preview of the service card.';
+            });
+
+            iconBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    iconBoxes.forEach(b => b.classList.remove('active'));
+
+                    this.classList.add('active');
+
+                    const iconClass = this.getAttribute('data-icon');
+
+                    selectedIconInput.value = iconClass;
+                    previewIcon.className = `fa-solid ${iconClass} fs-4`;
+                });
+            });
+            previewIcon.className = `fa-solid ${selectedIconInput.value} fs-4`;
+        });
+    </script>
+}
+

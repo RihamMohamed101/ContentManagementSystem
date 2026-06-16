@@ -1,23 +1,155 @@
 ﻿
+@{
+var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ContentManagementSystem</title>
+    <title>@ViewData["Title"] - CMS Admin</title>
+
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ContentManagementSystem.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+            .sidebar {
+                width: 260px;
+                min-width: 260px;
+            }
+
+            .bg-custom-indigo {
+                background-color: #4f46e5 !important;
+            }
+
+            .text-custom-indigo {
+                color: #4f46e5 !important;
+            }
+            /* كلاس اللينك النشط في السايدبار */
+            .nav-link-custom.active-custom {
+                background-color: #4f46e5 !important;
+                color: white !important;
+            }
+
+                .nav-link-custom.active-custom i {
+                    color: white !important;
+                }
+            /* تصميم اللينكات الافتراضي */
+            .nav-link-custom {
+                color: #475569;
+                font-weight: 500;
+                border-radius: 0.5rem;
+                padding: 0.65rem 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                transition: all 0.2s;
+                text-decoration: none;
+                font-size: 0.875rem;
+            }
+
+                .nav-link-custom:hover {
+                    background-color: #f8fafc;
+                    color: #1e293b;
+                }
+
+                .nav-link-custom i {
+                    width: 20px;
+                    color: #94a3b8;
+                    font-size: 1rem;
+                }
+    </style>
 </head>
-<body>
-  
-   
-            @RenderBody()
-    
+<body class="h-100 d-flex overflow-hidden bg-light text-dark">
+
+    <aside class="sidebar bg-white border-end d-flex flex-column justify-content-between flex-shrink-0">
+        <div>
+            <div class="p-4 d-flex align-items-center gap-3">
+                <div class="bg-custom-indigo text-white rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+                    <i class="fa-solid fa-table-columns fs-5"></i>
+                </div>
+                <div>
+                    <h1 class="fw-bold fs-6 mb-0 text-dark" style="letter-spacing: -0.025em;">Admin Panel</h1>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Management Console</small>
+                </div>
+            </div>
 
 
+            <!-- Navigation Links -->
+            <nav class="px-2 d-flex flex-column gap-1">
+                <a asp-controller="Dashboard" asp-action="Index" class="nav-link-custom">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a asp-controller="Hero" asp-action="index" class="nav-link-custom @(currentController == "Hero" ? "active-custom shadow-sm" : "")">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Hero</span>
+                </a>
+                <a asp-controller="About" asp-action="index" class="nav-link-custom  @(currentController == "About" ? "active-custom shadow-sm" : "")">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>About</span>
+                </a>
+                <a asp-controller="Service" asp-action="index" class="nav-link-custom  @(currentController == "Service" ? "active-custom shadow-sm" : "")">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Services</span>
+                </a>
+                <a asp-controller="Messages" asp-action="Index" class="nav-link-custom">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+              
+            </nav>
+        </div>
+
+        <!-- Bottom Sidebar Actions (Settings & Logout) -->
+        <div class="p-3 border-top d-flex flex-column gap-1">
+            <a asp-controller="Account" asp-action="Logout" class="nav-link-custom text-danger bg-hover-danger">
+                <i class="fa-solid fa-arrow-right-from-bracket text-danger"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-fill d-flex flex-column overflow-hidden">
+
+        <header class="bg-white border-bottom d-flex align-items-center justify-content-between px-4 flex-shrink-0" style="height: 64px;">
+            <div class="fs-5 fw-bold text-dark" style="color: #1e1b4b !important;">CMS Admin</div>
+
+            <div class="d-flex align-items-center gap-4">
+
+                <!-- View Website -->
+                <a href="#" target="_blank" class="text-decoration-none text-secondary fw-medium small">View Website</a>
+            </div>
+        </header>
+
+        <!-- DYNAMIC BODY (منطقة عرض الصفحات) -->
+        <main class="flex-fill overflow-auto p-4" style="background-color: #f8fafc;">
+            <div class="container-fluid py-2" style="max-width: 920px; margin: 0 auto;">
+                @RenderBody()
+            </div>
+        </main>
+
+        <!-- FOOTER  -->
+        <footer class="bg-white border-top d-flex align-items-center justify-content-between px-4 flex-shrink-0" style="height: 56px; font-size: 0.75rem; color: #64748b;">
+            <div>
+                &copy; @DateTime.Now.Year CMS Project. All rights reserved.
+            </div>
+            <div class="d-flex gap-3">
+                <a href="#" class="text-decoration-none text-secondary hover-underline">Privacy Policy</a>
+                <a href="#" class="text-decoration-none text-secondary hover-underline">Terms of Service</a>
+                <a href="#" class="text-decoration-none text-secondary hover-underline">Contact Support</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -9,12 +9,18 @@
 
                 // Get folder path
 
-                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\files" + folderName);
-
-                // get file name and make unique 
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", folderName);
 
 
-                string fileName = $"{Guid.NewGuid} {file.FileName}";
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // get file name and make unique 
+
+
+            string fileName = $"{Guid.NewGuid()} {file.FileName}";
 
                 // get file path ==? pathFolder+fileName
 
@@ -22,14 +28,15 @@
                 string filePAth = Path.Combine(folderPath, fileName);
 
 
-                // save file as stream ==? data per time
+            // save file as stream ==? data per time
 
-                var fileStrem = new FileStream(filePAth, FileMode.Create);
+            using (var fileStream = new FileStream(filePAth, FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
 
-                file.CopyTo(fileStrem);
 
-
-                return fileName;
+            return fileName;
 
             }
 
