@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BLL.Interfaces
@@ -12,5 +13,6 @@ namespace BLL.Interfaces
         public List<T> GetAll();
         public void Update(T Entity);
         public void Delete(T Entity);
+        public List<T> Find(Expression<Func<T, bool>> predicate);
     }
 }

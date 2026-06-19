@@ -3,6 +3,7 @@ using DAL.Data;
 using DAL.DomainModel;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BLL.Repository
@@ -36,9 +37,16 @@ namespace BLL.Repository
             return _db.Set<T>().ToList();
         }
 
+        public List<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return _db.Set<T>().Where(predicate).ToList();
+        }
+
         public void Update(T entity)
         {
             _db.Update(entity);
         }
+
+       
     }
 }

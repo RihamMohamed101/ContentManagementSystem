@@ -1,0 +1,47 @@
+﻿
+
+@model ContactMessage
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-3 w-75 mx-auto" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show  mb-3   w-75 mx-auto" role="alert">
+        <i class="fa-solid fa-circle-xmark me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<section id="contact" class="py-5 mb-5 pb-5">
+    <div class="container">
+        <div class="contact-card mx-auto text-center" style="max-width: 700px;">
+            <h2 class="text-primary-custom mb-2">Get in Touch</h2>
+            <form class="text-start mt-4" asp-controller="Home" asp-action="saveMessage">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium small">Name</label>
+                        <input asp-for="@Model.Name" type="text" class="form-control rounded-3" placeholder="Jane Doe">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-medium small">Email</label>
+                        <input asp-for="@Model.Email" class="form-control rounded-3" placeholder="jane@example.com">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-medium small">Message</label>
+                    <textarea asp-for="@Model.Message" class="form-control rounded-3" rows="4" placeholder="Tell us about your project..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 py-3 rounded-3 fw-medium">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+

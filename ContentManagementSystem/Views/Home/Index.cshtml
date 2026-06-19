@@ -1,8 +1,130 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles {
+    <style>
+        .badge-soft {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            font-weight: 600;
+            border-radius: 20px;
+        }
+
+        .text-primary-custom {
+            color: var(--primary-color);
+        }
+
+        .service-card {
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: 0.3s;
+            height: 100%;
+        }
+
+            .service-card:hover {
+                border-color: var(--primary-color);
+                box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1);
+            }
+
+        .icon-box-large {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+        }
+    </style>
+}
+
+<section class="py-5" style="background: radial-gradient(circle at top right, #f4f7fe 0%, #ffffff 100%);">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="badge-soft d-inline-block mb-3 fs-6">Next Generation Platform</span>
+                <h1 class="display-4 fw-bold mb-4">
+                    @(Model?.HeroSection?.Title ?? "Building Modern Software Solutions")
+                </h1>
+                <p class="lead text-muted mb-5 pe-lg-5">
+                    @(Model?.HeroSection?.Description ?? "Helping businesses grow digitally with scalable, secure, and intuitive tools.")
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#contact" class="btn btn-primary-custom px-4 py-3 rounded-3 fw-medium">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="~/files/images/@Model?.HeroSection?.ImageUrl" alt="Hero Illustration" class="img-fluid rounded-4 shadow-lg" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-5 my-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <img src="~/files/images/@Model.AboutSection.ImageUrl" alt="Our Team" class="img-fluid rounded-4 shadow" />
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <h2 class="text-primary-custom mb-3">@Model.AboutSection.Title</h2>
+                <p class="text-muted">@Model.AboutSection.Subtitle</p>
+                <p class="text-muted mb-4">
+                    @Model.AboutSection.Description
+                </p>
+                <div class="row g-4 mt-2">
+                    <div class="col-sm-6">
+                        <div class="p-4 rounded-4" style="background-color: var(--primary-light);">
+                            <h3 class="text-primary-custom fw-bold mb-1">10+</h3>
+                            <span class="text-dark fw-medium small text-uppercase">Years Experience</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5 mx-auto" style="max-width: 600px;">
+            <h2 class="text-primary-custom mb-3">Our Services</h2>
+            <p class="text-muted">Comprehensive digital solutions tailored to elevate your business.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+           
+                @foreach (var service in Model.ServicesList)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="service-card bg-white">
+                            <div class="icon-box-large">
+                                <i class="fa-solid @service.Icon"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">@service.Title</h4>
+                            <p class="text-muted mb-4">@service.Description</p>
+                        </div>
+                    </div>
+                }
+            
+        </div>
+    </div>
+</section>
+
+<partial name="_ContactPartial" model="Model.ContactMessage" />

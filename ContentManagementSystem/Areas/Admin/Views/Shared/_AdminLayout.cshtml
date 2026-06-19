@@ -99,7 +99,7 @@ var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
                     <i class="fa-solid fa-briefcase"></i>
                     <span>Services</span>
                 </a>
-                <a asp-controller="Messages" asp-action="Index" class="nav-link-custom">
+                <a asp-controller="Message" asp-action="Index" class="nav-link-custom @(currentController == "Message" ? "active-custom shadow-sm" : "")">
                     <i class="fa-regular fa-envelope"></i>
                     <span>Messages</span>
                 </a>
@@ -124,7 +124,9 @@ var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
             <div class="d-flex align-items-center gap-4">
 
                 <!-- View Website -->
-                <a href="#" target="_blank" class="text-decoration-none text-secondary fw-medium small">View Website</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" target="_blank" class="text-decoration-none text-secondary fw-medium small">
+                    View Website
+                </a>
             </div>
         </header>
 
