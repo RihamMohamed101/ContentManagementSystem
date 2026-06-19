@@ -109,7 +109,7 @@ var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 
         <!-- Bottom Sidebar Actions (Settings & Logout) -->
         <div class="p-3 border-top d-flex flex-column gap-1">
-            <a asp-controller="Account" asp-action="Logout" class="nav-link-custom text-danger bg-hover-danger">
+            <a asp-area=""  asp-controller="Account" asp-action="LogOut" class="nav-link-custom text-danger bg-hover-danger">
                 <i class="fa-solid fa-arrow-right-from-bracket text-danger"></i>
                 <span>Logout</span>
             </a>

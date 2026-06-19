@@ -1,16 +1,40 @@
 ﻿@model LoginViewModel
 
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-body p-4 p-sm-5">
 
+                <h3 class="card-title text-center mb-4 fw-bold text-primary">Welcome Back</h3>
+                <p class="text-muted text-center small mb-4">Please enter your details to sign in.</p>
 
-<form asp-action="Login"> 
+                <form asp-action="Login" method="post">
 
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
 
-    
-    <input asp-for="@Model.UserName" />
+                    <div class="mb-3">
+                        <label asp-for="UserName" class="form-label fw-medium text-secondary">Username</label>
+                        <input asp-for="UserName" class="form-control py-2" placeholder="Enter username" autocomplete="username" />
+                        <span asp-validation-for="UserName" class="text-danger small"></span>
+                    </div>
 
-    <input asp-for="@Model.Password" />
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label fw-medium text-secondary">Password</label>
+                        <input asp-for="Password" type="password" class="form-control py-2" placeholder="Enter password" autocomplete="current-password" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
 
-    <button type="submit">Login</button>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
+                        <i class="fa-solid fa-right-to-bracket me-2"></i> Login
+                    </button>
 
+                </form>
 
-</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
